@@ -41,7 +41,8 @@ describe('Escrow', () => {
       await expect(contractForBuyer.cancel()).to.eventually.be.rejected;
     });
     it('fails if contract is tryed to be canceled by buyer but is in progress', async () => {
-      expect(await contractForSeller.isInProgress()).to.deep.equal(true);
+      contractForBuyer.confirmPurchase({value: doublePrice});
+      await expect(contractForSeller.cancel()).to.be.eventually.rejected;
     });
   });
 
