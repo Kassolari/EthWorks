@@ -4,19 +4,18 @@ pragma solidity ^0.4.25;
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
-contract TimeConstrainedCounter {
+contract Splitter {
 
     uint256 public value;
-    uint256 public multiple;
-
+    
     using SafeMath for uint256;
  
-    constructor () public {
-        value.add(1);
-        value.mul(2);
-        value.sub(2);
+    constructor(address[] beneficiaries, address feeCollector, ERC20 token) public {
+        
     }    
-    
-   
+
+    function split (uint256 amount) public {
+        
+    }
 
 }
