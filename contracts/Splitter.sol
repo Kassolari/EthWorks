@@ -4,6 +4,7 @@ pragma solidity ^0.4.25;
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
+//For help to get familiar with ERC20 token functions
 /*contract ERC20 {
     function totalSupply() public constant returns (uint);
     function balanceOf(address tokenOwner) public constant returns (uint balance);
@@ -17,11 +18,11 @@ import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract Splitter {
 
-    ERC20 token;
+    ERC20 public token;
     uint256 public value;
-    address owner;
-    address feeCollector;
-    address[] beneficiaries;
+    address public owner;
+    address public feeCollector;
+    address[] public beneficiaries;
     
     using SafeMath for uint256;
 
