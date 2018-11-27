@@ -1,7 +1,7 @@
-import chai, { expect } from 'chai';
+import chai, {expect} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import { createMockProvider, deployContract, getWallets, contractWithWallet } from 'ethereum-waffle';
-import { utils } from 'ethers';
+import {createMockProvider, deployContract, getWallets, contractWithWallet} from 'ethereum-waffle';
+import {utils} from 'ethers';
 
 import Escrow from '../../build/Escrow.json';
 
@@ -22,7 +22,7 @@ describe('Escrow', () => {
   });
 
   beforeEach(async () => {
-    contractForSeller = await deployContract(sellerWallet, Escrow, [], { value: doublePrice });
+    contractForSeller = await deployContract(sellerWallet, Escrow, [], {value: doublePrice});
     contractForBuyer = contractWithWallet(contractForSeller, buyerWallet);
   });
 
@@ -32,7 +32,7 @@ describe('Escrow', () => {
     });
 
     it('fails if odd amount is payed', async () => {
-      await expect(deployContract(sellerWallet, Escrow, [], { value: doublePrice.sub(1) })).to.be.eventually.rejected;
+      await expect(deployContract(sellerWallet, Escrow, [], {value: doublePrice.sub(1)})).to.be.eventually.rejected;
     });
   });
 
@@ -47,8 +47,8 @@ describe('Escrow', () => {
   });
 
   it('fails if the buyer pays a incorrect amount while confirming purchase', async () => {
-    await expect(contractForBuyer.confirmPurchase({ value: 0 })).to.eventually.be.rejected;
-    await expect(contractForBuyer.confirmPurchase({ value: doublePrice.add(2) })).to.eventually.be.rejected;
-    await expect(contractForBuyer.confirmPurchase({ value: price })).to.eventually.be.rejected;
+    await expect(contractForBuyer.confirmPurchase({value: 0})).to.eventually.be.rejected;
+    await expect(contractForBuyer.confirmPurchase({value: doublePrice.add(2)})).to.eventually.be.rejected;
+    await expect(contractForBuyer.confirmPurchase({value: price})).to.eventually.be.rejected;
   });
 });
