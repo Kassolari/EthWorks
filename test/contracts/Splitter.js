@@ -3,7 +3,8 @@ import chaiAsPromised from 'chai-as-promised';
 import {createMockProvider, deployContract, getWallets, contractWithWallet} from 'ethereum-waffle';
 import {utils} from 'ethers';
 
-import Escrow from '../../build/Escrow.json';
+
+import Splitter from '../../build/Splitter.json';
 
 chai.use(chaiAsPromised);
 

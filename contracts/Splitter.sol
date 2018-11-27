@@ -1,18 +1,20 @@
 
 pragma solidity ^0.4.25;
 
-//import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "../node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract TimeConstrainedCounter {
 
-    uint32 public value;
-    uint256 public startTime;
-    uint256 public endTime;
+    uint256 public value;
+    uint256 public multiple;
 
-    //aprove
-    //split ktory da trasfer from
+    using SafeMath for uint256;
+ 
     constructor () public {
-        value = 2; 
+        value.add(1);
+        value.mul(2);
+        value.sub(2);
     }    
     
    
