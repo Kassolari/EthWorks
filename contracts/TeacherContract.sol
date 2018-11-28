@@ -48,7 +48,7 @@ contract Course {
     //jesli wystepuje nie mozna go dodac uzycie require musi byc true
     
     function isAdded(address _address) private view returns (bool){
-        for (uint32 i = 0; i <students.length; ++i) {
+        for (uint32 i = 0; i < students.length; ++i) {
             if (students[i] == _address) {
                 return false;
             }
