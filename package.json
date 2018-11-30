@@ -25,6 +25,7 @@
     "lint": "npx eslint test"
   },
   "dependencies": {
-    "openzeppelin-solidity": "^2.0.0"
+    "openzeppelin-solidity": "^2.0.0",
+    "zeppelin-solidity": "^1.12.0"
   }
 }
