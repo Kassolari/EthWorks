@@ -16,7 +16,6 @@ describe('Splitter', () => {
   const doublePrice = price.mul(2);
   let contractForSeller;
   let contractForBuyer;
-  let blog;
 
   before(async () => {
     provider = createMockProvider();
