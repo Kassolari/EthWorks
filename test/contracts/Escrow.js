@@ -29,6 +29,7 @@ describe('Escrow', () => {
   describe('construction', () => {
     it('stores the price as half of the payed amount', async () => {
       expect(await contractForSeller.price()).to.deep.equal(price);
+      //console.log(price);
     });
 
     it('fails if odd amount is payed', async () => {
