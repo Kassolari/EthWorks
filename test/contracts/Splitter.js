@@ -12,15 +12,13 @@ describe('Splitter', () => {
   let token;
   let splitter1;
   let splitter2;
-  let splitter3;
-  let splitter4;
   let feeCollector;
   let contractForSeller;
-  let beneficiaries = [];
+  const beneficiaries = [];
   // let equalAmount;
   before(async () => {
     provider = createMockProvider();
-    [owner, splitter1, splitter2, splitter3, splitter4, feeCollector] = await getWallets(provider);
+    [owner, splitter1, splitter2, feeCollector] = await getWallets(provider);
     token = await deployContract(owner, BasicToken, [owner.address, 10000]);
   });
 
@@ -32,9 +30,24 @@ describe('Splitter', () => {
   });
 
   describe('construction', () => {
-    it('fails if there is less than 2 people to splitt', async () => {
-      // expect(await contractForSeller.beneficiaries()).to.be.equal(1);
-      // console.log(price);
+    it('fails if there is less than 2 people to split', async () => {
+      // await expect(deployContract(sellerWallet, Escrow, [], {value: doublePrice.sub(1)})).to.be.eventually.rejected;
+      beneficiaries.pop();
+      await expect(deployContract(owner, Splitter, [beneficiaries, feeCollector.address, token.address])).to.be.eventually.rejected;
+    });
+  });
+  describe('split test', () => {
+    it('fails if spender splits less tokens than number of people to split', async () => {
+      await expect (contractForSeller.split(1)).to.be.eventually.rejected;
+    });
+    it('fails if spender splits more tokens than he has', async () => {
+      await expect (contractForSeller.split(10001)).to.be.eventually.rejected;
+    });
+    it('should succed to split 1000 tokens', async () => {
+      await expect (contractForSeller.split(1000)).to.be.eventually.fulfilled;
+    });
+    it('should succed to split 1001 tokens', async () => {
+      await expect (contractForSeller.split(1001)).to.be.eventually.fulfilled;
     });
   });
 });

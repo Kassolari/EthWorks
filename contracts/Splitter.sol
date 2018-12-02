@@ -41,23 +41,21 @@ contract Splitter {
     }
 
     function calculateAmount(uint256 _amount) private view returns (uint256){
-        if (_amount.sub(1) % beneficiaries.length == 0  ) {return (_amount.sub(1)).div(beneficiaries.length);}
+        if ((_amount.sub(1)) % beneficiaries.length == 0  ) {return ((_amount.sub(1)).div((beneficiaries.length)));}
         else { 
             return (((_amount.sub(1)).sub((_amount.sub(1) % beneficiaries.length))).div(beneficiaries.length));
         } 
     }
 
-    function split (uint256 amount) public {
+    function split (uint256 amount) public onlyOwner() {
         require(amount > beneficiaries.length,"Amount is to small to divide");
         require(token.balanceOf(msg.sender) > amount,"Your balance is to small");
-        require(address(this).balance > 0,"No gas to run contract");
 
-        token.approve(msg.sender,amount);
         equalAmount = calculateAmount(amount);
         for (uint32 i = 0; i < beneficiaries.length; ++i) {
-            token.transferFrom(msg.sender,beneficiaries[i],equalAmount);
+            token.approve(beneficiaries[i],equalAmount);
         }
-        token.transferFrom(msg.sender,feeCollector,1);
+        token.approve(feeCollector,1);
     }
 
     function withdraw(address beneficiary) public payable onlyOwner {
