@@ -3,7 +3,7 @@ import chaiAsPromised from 'chai-as-promised';
 import {createMockProvider, deployContract, getWallets} from 'ethereum-waffle';
 import {utils} from 'ethers';
 import Splitter from '../../build/Splitter.json';
-import BasicTokenMock from '../../contracts/BasicTokenMock.sol'
+import BasicToken from '../../build/BasicToken.json';
 chai.use(chaiAsPromised);
 
 describe('Splitter', () => {
@@ -16,18 +16,19 @@ describe('Splitter', () => {
   let splitter4;
   let feeCollector;
   let contractForSeller;
-  let beneficiaries;
+  let beneficiaries = [];
   // let equalAmount;
   before(async () => {
     provider = createMockProvider();
-    [owner, splitter1] = await getWallets(provider);
-    token = await deployContract(owner, BasicTokenMock, [owner.address, 10000]);
+    [owner, splitter1, splitter2, splitter3, splitter4, feeCollector] = await getWallets(provider);
+    token = await deployContract(owner, BasicToken, [owner.address, 10000]);
   });
 
   beforeEach(async () => {
     // constructor(address[] _beneficiaries, address _feeCollector, ERC20 _token)
-    // beneficiaries.push(splitter1.address);
-    // contractForSeller = await deployContract(owner, Splitter, [beneficiaries, feeCollector, token]);
+    beneficiaries.push(splitter1.address);
+    beneficiaries.push(splitter2.address);
+    contractForSeller = await deployContract(owner, Splitter, [beneficiaries, feeCollector.address, token.address]);
   });
 
   describe('construction', () => {
