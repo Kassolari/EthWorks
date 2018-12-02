@@ -1,39 +1,38 @@
 import chai, {expect} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import {createMockProvider, deployContract, getWallets, contractWithWallet} from 'ethereum-waffle';
+import {createMockProvider, deployContract, getWallets} from 'ethereum-waffle';
 import {utils} from 'ethers';
-
 import Splitter from '../../build/Splitter.json';
-
+import BasicTokenMock from '../../contracts/BasicTokenMock.sol'
 chai.use(chaiAsPromised);
 
 describe('Splitter', () => {
   let provider;
-  let sellerWallet;
-  let buyerWallet;
-  let contractForSeller;
-  let contractForBuyer;
-
-  let token;
-  let equalAmount;
   let owner;
+  let token;
+  let splitter1;
+  let splitter2;
+  let splitter3;
+  let splitter4;
   let feeCollector;
+  let contractForSeller;
   let beneficiaries;
-
+  // let equalAmount;
   before(async () => {
     provider = createMockProvider();
-    [sellerWallet, buyerWallet] = await getWallets(provider);
+    [owner, splitter1] = await getWallets(provider);
+    token = await deployContract(owner, BasicTokenMock, [owner.address, 10000]);
   });
 
   beforeEach(async () => {
     // constructor(address[] _beneficiaries, address _feeCollector, ERC20 _token)
-    contractForSeller = await deployContract(sellerWallet, Splitter, []);
-    contractForBuyer = contractWithWallet(contractForSeller, buyerWallet);
+    // beneficiaries.push(splitter1.address);
+    // contractForSeller = await deployContract(owner, Splitter, [beneficiaries, feeCollector, token]);
   });
 
   describe('construction', () => {
     it('fails if there is less than 2 people to splitt', async () => {
-      expect(await contractForSeller.beneficiaries()).to.be.equal(1);
+      // expect(await contractForSeller.beneficiaries()).to.be.equal(1);
       // console.log(price);
     });
   });
